@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<link rel="stylesheet" type="text/css" href="CSS/style.css"></link>
+</h:head> 
+<body style="background-color: yellow">
+	
+    <rich:panel id="panel" style="height:770px">
+        
+        <h:form id="form">
+       	<rich:toolbar height="35px" itemSeparator="line">
+       		<rich:dropDownMenu mode="ajax">
+       			<f:facet name="label"><h:outputText value="Autres" style="font-size:1.2em"></h:outputText></f:facet>
+       			<rich:menuItem label="Prix" action="new_vente" ></rich:menuItem>
+       			<rich:menuItem label="Echange" action="new_echange" ></rich:menuItem>
+       		</rich:dropDownMenu>
+       		<rich:dropDownMenu mode="ajax">
+       			<f:facet name="label"><h:outputText value="Quitter" style="font-size:1.2em"></h:outputText></f:facet>
+       			<rich:menuItem label="Authentification" action="new_index" ></rich:menuItem>
+       			
+       		</rich:dropDownMenu>
+       	</rich:toolbar>
+        <fieldset style="box-shadow:4px 4px 40px black;border-radius: 9px;height:690px">
+        	<legend style="color: yellow"><h2>Enregistrement des Monnaie</h2> </legend>
+        	<h1 style="color:rgb(205,36,219);margin-left:50%;"><h:outputText style="margin-left:50%" value="#{mo.info}"  id="message"/></h1>
+        	
+        	<div class="monnaie" style="height:200px">
+			<h:panelGrid columns="2" style="margin-bottom:20px;margin-top:50px">
+				<h:inputText value="#{mo.nom}" required="true" valueChangeListener="#{mo.supprimer_information}" requiredMessage="Veuillez saisir le nom" id="nom" style="font-size:1.5em;" >
+					<rich:placeholder value="Tapez le Nom ici"></rich:placeholder>
+					<a4j:ajax event="keyup" render="message"></a4j:ajax>
+				</h:inputText>
+		
+				<a4j:commandButton value="Enregistrer" title="bouton pour enregistrer" action="#{mo.enregistrerMonnaie()}" type="reset" id="enregistrer" style="font-size:2em;margin-left:79px" render="tab,message,msg"  ></a4j:commandButton>
+			</h:panelGrid>
+			
+			
+		<rich:notifyMessages stayTime="2000" nonblocking="true"  id="msg" for="nom" />
+		
+			<h:panelGrid columns="1">
+			
+				<rich:extendedDataTable var="mone" value="#{mo.list_monnaie}" id="tab" style="height:400px;"  >
+					<f:facet name="header">
+						<h:outputText value="Liste des monnaies enregistrees" />
+					</f:facet>
+					
+					<rich:column >
+						<f:facet name="header">
+							<h:outputText value="Identifiant" />
+						</f:facet>
+						<h:outputText value="#{mone.IDmo}"/>
+						
+					</rich:column >
+					<rich:column width="200px">
+						<f:facet name="header" >
+							<h:outputText value="Nom de la monnaie" />
+						</f:facet>
+						<h:outputText value="#{mone.nom}" />
+						
+					</rich:column>
+					<rich:column>
+						   <a4j:commandButton value="delete" id="detail" title="bouton pour supprimer" action="#{mo.supprimerMonnaie()}" execute="@this" render="tab,message">  
+					            <f:setPropertyActionListener target="#{mo.mo_click}" value="#{mone}"/>  
+					        </a4j:commandButton>
+					</rich:column>
+				</rich:extendedDataTable>
+			</h:panelGrid>
+			</div>
+			
+		</fieldset>
+		</h:form>
+	</rich:panel>
+</body> 
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<link rel="stylesheet" type="text/css" href="CSS/style.css"></link>
+</h:head> 
+<body style="background-color: yellow">
+
+    <rich:panel id="panel">
+       <h:form>
+       <rich:toolbar height="35px" itemSeparator="line">
+       		<rich:dropDownMenu mode="ajax">
+       			<f:facet name="label"><h:outputText value="Autres" style="font-size:1.2em"></h:outputText></f:facet>
+       			<rich:menuItem label="Monnaie" action="new_monaie"></rich:menuItem>
+       			<rich:menuItem label="Echanger" action="new_echange"></rich:menuItem>
+       		</rich:dropDownMenu>
+       		<rich:dropDownMenu mode="ajax">
+       			<f:facet name="label"><h:outputText value="Quitter" style="font-size:1.2em"></h:outputText></f:facet>
+       			<rich:menuItem label="Authentification" action="new_index"></rich:menuItem>
+       		</rich:dropDownMenu>
+       </rich:toolbar>
+       		<fieldset style="box-shadow:4px 4px 40px black;border-radius: 9px;">
+       			<legend style="color: yellow"><h2>Gestion des donnes des echanges</h2></legend>
+       			<h1 style="color:rgb(205,36,219);margin-left:60%;"><h:outputText value="#{ven.info}" id="messages" /></h1>
+       			<h:panelGrid columns="1" id="zone" style="margin-right:auto;margin-left:auto;margin-top:50px">
+       			<h:panelGroup>
+       				<strong><h:outputText value="Monnaie client:"  style="font-size:1.3em;" /></strong>
+       				<h:selectOneMenu value="#{ven.nomUn}" valueChangeListener="#{ven.Effacer_Message}" style="width:210px;font-size:1.3em;margin-bottom:20px;margin-left:27px" id="nom1"  >
+       					<f:selectItems value="#{ven.list_monnaie}"/>
+       					<a4j:ajax event="change" render="messages"></a4j:ajax>
+       				</h:selectOneMenu>
+       				</h:panelGroup>
+       				<h:panelGroup>
+       					<strong><h:outputText value="Prix:" style="font-size:1.3em;" /></strong>
+       				<h:inputText value="#{ven.prix}" id="prix" valueChangeListener="#{ven.Change_listener}" style="width:210px;font-size:1.3em;margin-bottom:20px;margin-left:100px">
+       					<rich:placeholder value="Tapez le Prix ici"></rich:placeholder>
+       					<a4j:ajax event="keypress" render="messages"></a4j:ajax>
+       				</h:inputText>
+       				</h:panelGroup>
+       				<h:panelGroup>
+       				<strong><h:outputText value="Monnaie à donnee:"  style="font-size:1.3em;" /></strong>
+       				<h:selectOneMenu value="#{ven.nomDeux}" id="nom2" valueChangeListener="#{ven.Effacer_Message}" style="width:210px;font-size:1.3em;margin-bottom:20px;margin-left:5px">
+       					<f:selectItems value="#{ven.list_monnaie}" />
+       					<a4j:ajax event="change" render="messages"></a4j:ajax>
+       				</h:selectOneMenu>
+       				</h:panelGroup>
+       				<h:panelGroup>
+       				<strong><h:outputText value="Type d'echange:"  style="font-size:1.3em;"  /></strong>
+       				<h:selectOneMenu value="#{ven.type}" id="type" valueChangeListener="#{ven.Effacer_Message}" style="width:210px;font-size:1.3em;margin-bottom:20px;margin-left:22px">
+       					<f:selectItem itemValue="selectionnez le type" itemLabel="selectionnez le type"/>
+       					<f:selectItem itemValue="achat" itemLabel="achat"/>
+       					<f:selectItem itemValue="vente" itemLabel="vente"/>
+       					<a4j:ajax event="change" render="messages"></a4j:ajax>
+       				</h:selectOneMenu>
+       				</h:panelGroup>
+       			</h:panelGrid>
+       			<h:panelGrid columns="3" style="margin-right:auto;margin-left:auto">
+       				<a4j:commandButton value="Enregistre" id="enregistre" action="#{ven.enregistre_Donne()}" type="reset" render="tab,messages" disabled="#{ven.disable}" title="Enregistrer les donnes" style="font-size:2em;margin-bottom:20px;margin-right:20px"></a4j:commandButton>
+       				<a4j:commandButton value="OK" action="#{ven.Actualiser()}" render="messages" title="Effacer le message de succes" style="font-size:2em;margin-bottom:20px;margin-right:20px"></a4j:commandButton>
+       				<a4j:commandButton value="Modifier" id="modifier" action="#{ven.modifier_Donne()}" render="tab,messages,enregistre,zone"  title="Enregistrer les modification" style="font-size:2em;margin-bottom:20px"></a4j:commandButton>
+       				
+       			</h:panelGrid>
+       			<h:panelGrid columns="1" style="margin-right:auto;margin-left:auto">
+       				<rich:extendedDataTable var="ve" value="#{ven.list_donne}" id="tab" style="height:350px;">
+       				
+       					<f:facet name="header">
+       						<strong><h:outputText value="Table des donnes des echanges" /></strong>
+       					</f:facet>
+       					<rich:column>
+       						<f:facet name="header">
+       							<strong><h:outputText value="Id" /></strong>
+       						</f:facet>
+       						<h:outputText value="#{ve.veId}"/>
+       					</rich:column>
+       					<rich:column width="200px">
+       						<f:facet name="header">
+       							<strong><h:outputText value="Monnaie Client" /></strong>
+       						</f:facet>
+       						<h:outputText value="#{ve.nomUn}" />
+       					</rich:column>
+       					<rich:column>
+       						<f:facet name="header">
+       							<strong><h:outputText value="Prix" /></strong>
+       						</f:facet>
+       						<h:outputText value="#{ve.prix}" />
+       					</rich:column>
+       					<rich:column width="200px">
+       						<f:facet name="header">
+       							<strong><h:outputText value="Monnaie à Donner" /></strong>
+       						</f:facet>
+       						<h:outputText value="#{ve.nomDeux}" />
+       					</rich:column>
+       					<rich:column>
+       						<f:facet name="header">
+       							<strong><h:outputText value="Type" /></strong>
+       						</f:facet>
+       						<h:outputText value="#{ve.type}" />
+       					</rich:column>
+       					<rich:column>
+       						<a4j:commandButton value="Editer" action="#{ven.detaille_vente()}" title="bouton pour editer" render="zone,tab,messages,enregistre" execute="@this">
+       							<f:setPropertyActionListener value="#{ve}" target="#{ven.ve_click}" />
+       						</a4j:commandButton>
+       					</rich:column>
+       					<rich:column>
+       						<a4j:commandButton value="delete" action="#{ven.supprimer_Donne()}" render="tab,messages" execute="@this" title="bouton pour supprimer">
+       							<f:setPropertyActionListener value="#{ve}" target="#{ven.ve_click}" />
+       						</a4j:commandButton>
+       					</rich:column>
+       				</rich:extendedDataTable>
+       			</h:panelGrid>
+       		</fieldset>
+       </h:form> 
+	</rich:panel>
+</body> 
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#Index.xhtml" PATH="/Index.xhtml"
+  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#Index.xhtml:0" NAME="item"
+   PATH="/Index.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="echange::#Monnaie.xhtml" NAME="output"
+    PATH="/Monnaie.xhtml" TARGET="rules:#Monnaie.xhtml" TITLE="echange" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#Monnaie.xhtml" PATH="/Monnaie.xhtml"
+  SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#Vente.xhtml" PATH="/Vente.xhtml"
+  SHAPE="256,145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#Echange.xhtml" PATH="/Echange.xhtml"
+  SHAPE="272,321,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#*" PATH="/*" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#*:0" NAME="item" PATH="/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="new_monaie::#Monnaie.xhtml" NAME="output"
+    PATH="/Monnaie.xhtml" TARGET="rules:#Monnaie.xhtml"
+    TITLE="new_monaie" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="new_vente::#Vente.xhtml" NAME="output1"
+    PATH="/Vente.xhtml" TARGET="rules:#Vente.xhtml" TITLE="new_vente" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="new_echange::#Echange.xhtml" NAME="output2"
+    PATH="/Echange.xhtml" TARGET="rules:#Echange.xhtml"
+    TITLE="new_echange" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="new_index::#Index.xhtml" NAME="output3"
+    PATH="/Index.xhtml" TARGET="rules:#Index.xhtml" TITLE="new_index" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>

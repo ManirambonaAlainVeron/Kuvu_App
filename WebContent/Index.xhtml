@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<link rel="stylesheet" type="text/css" href="CSS/style.css"></link>
+	<meta  http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</h:head> 
+<body style="background-color: yellow">
+    <rich:panel id="panel" style="height:770px">
+    	<h:form>
+    	<h1 style="color:rgb(205,36,19);margin-left:50%;"><h:outputText  value="#{index.info}" id="message"/></h1>
+    	<div class="fenetre">
+    		<h:graphicImage value="/Images/key.png" style="margin-left:130px" />
+    		<h:panelGrid columns="1" id="d">
+    			<h:inputText value="#{index.login}" required="true" valueChangeListener="#{index.change_message}"  requiredMessage="Saisissez s'il vous plait votre identifiant pour se connecter!" id="Login" style="font-size:1.9em;margin-top:10px;margin-left:25%;border:1px solid white;border-bottom:2px solid green" >
+    				<rich:placeholder value="Tapez votre Login"></rich:placeholder>
+    				<a4j:ajax event="keyup" render="message" execute="@this"></a4j:ajax>
+    			</h:inputText>
+    			
+    			<h:inputSecret value="#{index.password}" required="true" valueChangeListener="#{index.change_message}" requiredMessage="Saisissez s'il vous plait le mot de passe!" id="password" style="font-size:1.9em;margin-top:30%;margin-left:25%;border:1px solid white;border-bottom:2px solid green">
+    				<rich:placeholder value="Tapez votre mot de passe"></rich:placeholder>
+    				<a4j:ajax event="keyup" render="message" execute="@this"></a4j:ajax>
+    			</h:inputSecret>
+    			
+    		</h:panelGrid>
+    		<a4j:commandButton  value="Connection" action="#{index.se_connecter()}" render="msg1,msg2,message" type="reset" style="font-size:2em;margin-top:20%;margin-left:30%"/>
+    		<rich:notifyMessages stayTime="5000" nonblocking="true"  id="msg1" for="Login"/>
+    		<rich:notifyMessages stayTime="5000" nonblocking="true"  id="msg2" for="password"/>
+    	</div>
+    	</h:form>
+	</rich:panel>
+</body> 
+</html>

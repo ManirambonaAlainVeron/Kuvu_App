@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<link rel="stylesheet" type="text/css" href="CSS/style.css"></link>
+</h:head> 
+<body style="background-color: yellow">
+    <rich:panel style="background-color: green;height:770px">
+    
+       <h:form>
+       
+       <rich:toolbar height="35px" itemSeparator="line">
+       		<rich:dropDownMenu mode="ajax">
+       			<f:facet name="label"><h:outputText value="Autres" style="font-size:1.2em"></h:outputText></f:facet>
+       			<rich:menuItem label="Monnaie" action="new_monaie" ></rich:menuItem>
+       			<rich:menuItem label="Prix" action="new_vente"></rich:menuItem>
+       		</rich:dropDownMenu>
+       		<rich:dropDownMenu mode="ajax">
+       			<f:facet name="label"><h:outputText value="Quitter" style="font-size:1.2em"></h:outputText></f:facet>
+       			<rich:menuItem label="Authentification" action="new_index"></rich:menuItem>
+       		</rich:dropDownMenu>
+       </rich:toolbar>
+       <h1 style="color:rgb(205,36,219);margin-left:50%;"><h:outputText style="margin-left:40%" value="#{echange.info}"   id="message"/></h1>
+       		<fieldset style="background-color:rgb(255,153,0);width:35%;margin-right:auto;margin-left:auto;margin-top:60px;box-shadow:4px 4px 50px black;border-radius: 9px;">
+       			<legend style="color:yellow"><h2 >Echanger</h2></legend>
+       			<h:panelGrid  style="margin-right:auto;margin-left:auto;margin-top:30px;">
+       				<h:outputText value="#{echange.somme}" id="somme" style="border:2px solid black;background-color:rgb(102,153,255);font-size:2em;padding-top:10px;padding-bottom:10px;margin-left:10px;margin-right:10px" />
+       			</h:panelGrid>
+       			<h:panelGrid columns="1" style="margin-right:auto;margin-left:auto;margin-top:50px">
+       				<h:panelGroup>
+       				<strong><h:outputText value="Type d'echange:" style="font-size:1.5em;margin-right:5px"/></strong>
+       				<h:selectOneMenu value="#{echange.type}" valueChangeListener="#{echange.chargerEchange}" style="width:230px;font-size:1.5em;margin-bottom:70px">
+       					<f:selectItem itemValue="Selesctionnez le type" itemLabel="Selectionnez le type"/>
+       					<f:selectItem itemValue="achat" itemLabel="Achat"/>
+       					<f:selectItem itemValue="vente" itemLabel="Vente"/>
+       					<a4j:ajax event="change" render="ech,message" ></a4j:ajax>
+       				</h:selectOneMenu>
+       				</h:panelGroup>
+       				<h:panelGroup>
+       				<strong><h:outputText value="Echanges:" style="font-size:1.5em;margin-right:15px"/></strong>
+       				<h:selectOneMenu value="#{echange.echId}" id="ech" valueChangeListener="#{echange.echange_listener}" style="width:265px;font-size:1.5em;margin-bottom:70px">
+       					<f:selectItems value="#{echange.list_echange}"/>
+       					<a4j:ajax event="change" render="message" execute="message"></a4j:ajax>
+       				</h:selectOneMenu>
+       				</h:panelGroup>
+       				<h:panelGroup>
+       				<strong><h:outputText value="Taux du client:" style="font-size:1.5em;margin-right:20px"/></strong>
+       				<h:inputText value="#{echange.taux}" id="text" valueChangeListener="#{echange.echange_listenere}" style="width:230px;font-size:1.5em;margin-bottom:30px">
+       				 <a4j:ajax event="keypress"  render="message" execute="message" ></a4j:ajax>
+       				</h:inputText>
+       				</h:panelGroup>
+       			</h:panelGrid>
+       			<h:panelGrid columns="2" style="margin-right:auto;margin-left:auto;margin-bottom:20px;margin-top:40px">
+       				<a4j:commandButton value="Echanger" action="#{echange.Echange_Argent()}" type="reset" render="somme,message" id="btn" title="Calculer la somme à donner"  style="font-size:2em;margin-right:50px"></a4j:commandButton>
+       				<a4j:commandButton value="Effacer" action="#{echange.Effacer_somme()}" styleClass="imageButton" style="font-size:2em;" render="somme" title="Effacer la somme trouvee">
+       				<!-- <h:graphicImage value="/Images/effacer.png" /> -->
+       				</a4j:commandButton>
+       			</h:panelGrid>
+       			
+       		</fieldset>
+       </h:form>
+	</rich:panel>
+</body> 
+</html>
